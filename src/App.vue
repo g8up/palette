@@ -38,6 +38,8 @@ const content = computed(()=>{
 }
 .content {
   width: 300px;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 .content ul{
   position: fixed;
