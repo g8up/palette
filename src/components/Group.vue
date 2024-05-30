@@ -1,10 +1,9 @@
 <template>
-  <div class="small-title" v-text="group.name"></div>
+  <div class="small-title" v-text="group.name" :id="group.name"></div>
   <ul class="color-group-list">
-    <li class="color-group">
+    <li v-for="(palette, index) in group.palettes" 
+        :key="index" class="color-group">
       <Palette
-        v-for="palette in group.palettes"
-        :key="index"
         :colors="palette"
       />
     </li>
@@ -42,9 +41,6 @@ defineProps<{ group: IGroup }>();
   margin-top: 0;
 }
 
-.color-group-list > li {
-  margin: 47px 7px 0;
-}
 ul,
 ol,
 li {

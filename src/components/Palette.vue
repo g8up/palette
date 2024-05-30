@@ -2,7 +2,7 @@
   <div class="color-block">
     <span
       v-for="color in colors"
-      :key="val"
+      :key="color.val"
       class="color"
       :style="`background-color:${color.val}`"
       :data-color="`${color.name ?? color.val}`"
