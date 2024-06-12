@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { computed, } from 'vue';
+import { ref,  computed, } from 'vue';
 import Group from './components/Group.vue';
-import { IGroup, IColors } from './types.d.ts';
 import groups from './groups.json' with {type: 'json'};
 
-const group: IGroup = {
-  name: 'sigma',
-  palettes: [
-    [{ val: 'red', name: '血色浪漫' }, { val: 'green' }, { val: '#99cccc' }],
-    [{ val: 'red' }, { val: 'green' }, { val: '#99cccc' }],
-  ],
-};
+/** 复制时是否带# */
+const copyWithSharp = ref(true);
+/** 是否大写 */
+const isUppercase = ref(true);
+/** todo: type: rgb */
 
 const content = computed(()=>{
   return groups.map(group=>group.name);
@@ -18,22 +15,35 @@ const content = computed(()=>{
 </script>
 
 <template>
-<div class="page">
-  <div class="content">
-    <ul>
-      <li v-for="title in content" :key="title">
-        <div><a v-text="title" :href="`#${title}`"></a></div>
-      </li>
-    </ul>
+  <div class="page">
+    <div class="content">
+      <div>
+        <ul>
+          <li v-for="title in content" :key="title">
+            <div>
+              <a v-text="title" :href="`#${encodeURIComponent(title)}`"></a>
+            </div>
+          </li>
+        </ul>
+        <p>Click to Copy</p>
+        <label> <input v-model="copyWithSharp" type="checkbox" />With # </label>
+        <label> <input v-model="isUppercase" type="checkbox" />Uppercase</label>
+      </div>
+    </div>
+    <div class="groups">
+      <Group
+        v-for="group in groups"
+        :group="group"
+        :key="group.name"
+        :copyWithSharp="copyWithSharp"
+        :isUppercase="isUppercase"
+      />
+    </div>
   </div>
-  <div class="groups">
-    <Group v-for="group in groups" :group="group" :key="group.name"/>
-  </div>
-</div>
 </template>
 
 <style scoped>
-.page{
+.page {
   display: flex;
 }
 .content {
@@ -41,10 +51,10 @@ const content = computed(()=>{
   max-height: 100vh;
   overflow-y: scroll;
 }
-.content ul{
+.content > div {
   position: fixed;
 }
-.groups{
+.groups {
   flex: 1;
 }
 .logo {

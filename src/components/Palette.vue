@@ -6,16 +6,21 @@
       class="color"
       :style="`background-color:${color.val}`"
       :data-color="`${color.name ?? color.val}`"
-      @click="() => copyText(color.val)"
+      @click="() => copyColor(color.val)"
+      :title="color.val"
     ></span>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { IColors } from '../types.d.ts';
-defineProps<{ colors: IColors[] }>();
+import { IColors } from '../types.ts';
+const props = defineProps<{
+  colors: IColors[];
+  copyWithSharp: boolean;
+  isUppercase: boolean;
+}>();
 
-const copyText = (text) => {
+const copyText = (text: string) => {
   if (text !== undefined && text !== '') {
     var cont = document.createElement('textarea');
     cont.value = text;
@@ -25,6 +30,19 @@ const copyText = (text) => {
     document.execCommand('copy');
     cont.remove();
   }
+};
+
+const copyColor = (color: string) => {
+  console.log(props.copyWithSharp);
+  if (!props.copyWithSharp) {
+    color = color.replace('#', '');
+  }
+  if (props.isUppercase) {
+    color = color.toUpperCase();
+  } else {
+    color = color.toLowerCase();
+  }
+  copyText(color);
 };
 </script>
 

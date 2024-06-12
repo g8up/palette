@@ -1,4 +1,4 @@
-interface IColors {
+export interface IColors {
   val: string;
   name?: string;
 }

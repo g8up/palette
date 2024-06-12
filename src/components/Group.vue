@@ -1,20 +1,21 @@
 <template>
   <div class="small-title" v-text="group.name" :id="group.name"></div>
   <ul class="color-group-list">
-    <li v-for="(palette, index) in group.palettes" 
-        :key="index" class="color-group">
-      <Palette
-        :colors="palette"
-      />
+    <li
+      v-for="(palette, index) in group.palettes"
+      :key="index"
+      class="color-group"
+    >
+      <Palette :colors="palette" :copyWithSharp="copyWithSharp" :isUppercase="isUppercase" />
     </li>
   </ul>
 </template>
 
 <script lang="ts" setup>
-import { IGroup, IColors } from '../types.d.ts';
+import { IGroup, } from '../types.ts';
 import Palette from './Palette.vue';
 
-defineProps<{ group: IGroup }>();
+defineProps<{ group: IGroup; copyWithSharp: boolean; isUppercase: boolean }>();
 </script>
 
 <style>
