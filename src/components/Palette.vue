@@ -1,23 +1,17 @@
 <template>
   <div class="color-block">
-    <span
-      v-for="color in colors"
-      :key="color.val"
-      class="color"
-      :style="`background-color:${color.val}`"
-      :data-color="`${color.name ?? color.val}`"
-      @click="() => copyColor(color.val)"
-      :title="color.val"
-    ></span>
+    <span v-for="color in colors" :key="color.val" class="color" :style="`background-color:${color.val}`"
+      :data-color="`${color.name ?? color.val}`" @click="() => copyColor(color.val)" :title="color.val"></span>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { IColors } from '../types.ts';
+import { IColors, IFormat, } from '../types.ts';
+import { hexToRgb } from '../common/util';
+
 const props = defineProps<{
   colors: IColors[];
-  copyWithSharp: boolean;
-  isUppercase: boolean;
+  format: IFormat;
 }>();
 
 const copyText = (text: string) => {
@@ -33,16 +27,20 @@ const copyText = (text: string) => {
 };
 
 const copyColor = (color: string) => {
-  console.log(props.copyWithSharp);
-  if (!props.copyWithSharp) {
-    color = color.replace('#', '');
-  }
-  if (props.isUppercase) {
-    color = color.toUpperCase();
+  let formatedColor = color;
+  if (props.format.isRGB) {
+    formatedColor = hexToRgb(color, props.format.isRGBWithBracket);
   } else {
-    color = color.toLowerCase();
+    if (!props.format.copyWithSharp) {
+      formatedColor = color.replace('#', '');
+    }
+    if (props.format.isUppercase) {
+      formatedColor = formatedColor.toUpperCase();
+    } else {
+      formatedColor = formatedColor.toLowerCase();
+    }
   }
-  copyText(color);
+  copyText(formatedColor);
 };
 </script>
 
@@ -59,21 +57,26 @@ const copyColor = (color: string) => {
   display: flex;
   margin-bottom: 30px;
 }
+
 .color-block .color {
   display: block;
   flex: 1 0 0;
   position: relative;
 }
+
 .color-block .color:hover {
   color: currentColor;
   opacity: 0.8;
 }
+
 .color-block .color:first-child {
   border-radius: 10px 0 0 10px;
 }
+
 .color-block .color:last-child {
   border-radius: 0 10px 10px 0;
 }
+
 .color-block .color::before {
   content: attr(data-color);
   position: absolute;

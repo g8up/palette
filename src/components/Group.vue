@@ -6,16 +6,16 @@
       :key="index"
       class="color-group"
     >
-      <Palette :colors="palette" :copyWithSharp="copyWithSharp" :isUppercase="isUppercase" />
+      <Palette :colors="palette" :format="format"/>
     </li>
   </ul>
 </template>
 
 <script lang="ts" setup>
-import { IGroup, } from '../types.ts';
+import { IGroup, IFormat, } from '../types.ts';
 import Palette from './Palette.vue';
 
-defineProps<{ group: IGroup; copyWithSharp: boolean; isUppercase: boolean }>();
+defineProps<{ group: IGroup; format: IFormat }>();
 </script>
 
 <style>
