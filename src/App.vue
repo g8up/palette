@@ -2,6 +2,7 @@
 import { ref, computed, } from 'vue';
 import Group from './components/Group.vue';
 import groups from './groups.json' with {type: 'json'};
+import { IFormat, } from './types.ts';
 
 const format = ref<IFormat>({
   /** 复制时是否带# */
