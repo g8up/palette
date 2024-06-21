@@ -6,7 +6,7 @@
       :key="index"
       class="color-group"
     >
-      <Palette :colors="palette" :format="format"/>
+      <Palette :colors="palette.palette" :format="format"/>
     </li>
   </ul>
 </template>

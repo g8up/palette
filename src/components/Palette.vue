@@ -1,11 +1,12 @@
 <template>
   <div class="color-block">
-    <span v-for="color in colors" :key="color.val" class="color" :style="`background-color:${color.val}`"
+    <span v-for="color in (colors)" :key="color.val" class="color" :style="`background-color:${color.val}`"
       :data-color="`${color.name ?? color.val}`" @click="() => copyColor(color.val)" :title="color.val"></span>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { computed, } from 'vue';
 import { IColors, IFormat, } from '../types.ts';
 import { hexToRgb, notify, } from '../common/util';
 

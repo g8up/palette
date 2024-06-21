@@ -1,10 +1,15 @@
 export interface IColors {
   val: string;
   name?: string;
+  palette?: IColors[];
 }
 
 /** 调色盘 */
-type Palette = IColors[];
+interface Palette {
+  name?: string;
+  palette: IColors[];
+}
+
 
 export interface IGroup {
   name: string;
