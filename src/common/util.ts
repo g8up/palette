@@ -27,3 +27,31 @@ export const hexToRgb = (hex: string, withBracket = true) => {
 
 // 使用示例
 // console.log(hexToRgb('#0099CC'));  // 输出: rgb(0, 153, 204)
+
+/**
+ * 通知
+ * https://developer.mozilla.org/zh-CN/docs/Web/API/notification
+ * new Notification('Title', {body: 'Hello'});
+ */
+export const notify = (title: string, body: string) => {
+  // 先检查浏览器是否支持
+  if (!('Notification' in window)) {
+    console.log('This browser does not support desktop notification');
+  }
+
+  // 检查用户是否同意接受通知
+  else if (Notification.permission === 'granted') {
+    // If it's okay let's create a notification
+    new Notification(title, { body });
+  }
+
+  // 否则我们需要向用户获取权限
+  else if (Notification.permission !== 'denied') {
+    Notification.requestPermission().then(function (permission) {
+      // 如果用户接受权限，我们就可以发起一条消息
+      if (permission === 'granted') {
+        new Notification(title, { body });
+      }
+    });
+  }
+};

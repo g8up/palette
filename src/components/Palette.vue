@@ -7,7 +7,7 @@
 
 <script lang="ts" setup>
 import { IColors, IFormat, } from '../types.ts';
-import { hexToRgb } from '../common/util';
+import { hexToRgb, notify, } from '../common/util';
 
 const props = defineProps<{
   colors: IColors[];
@@ -41,6 +41,7 @@ const copyColor = (color: string) => {
     }
   }
   copyText(formatedColor);
+  notify(`Palette: 复制成功!`, `${formatedColor}`);
 };
 </script>
 
