@@ -5,6 +5,7 @@
       v-for="(palette, index) in group.palettes"
       :key="index"
       class="color-group"
+      :title="palette.name"
     >
       <Palette :colors="palette.palette" :format="format"/>
     </li>

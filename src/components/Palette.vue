@@ -1,5 +1,5 @@
 <template>
-  <div class="color-block">
+  <div class="color-block" :style="{width: `${colors.length * 62}px`}">
     <span v-for="color in (colors)" :key="color.val" class="color" :style="`background-color:${color.val}`"
       :data-color="`${color.name ?? color.val}`" @click="() => copyColor(color.val)" :title="color.val"></span>
   </div>
@@ -52,7 +52,7 @@ const copyColor = (color: string) => {
   border: 4px solid #f1f4f7;
   box-shadow: -6px -6px 6px rgba(255, 255, 255, 0.8), 6px 6px 6px #e0e4eb;
   border-radius: 10px;
-  width: 182px;
+  /* width: 182px; */
   height: 66px;
   color: #172948;
   font-size: 12px;
